@@ -197,35 +197,225 @@
 
 // 온습도 센서
 
-#include "DHT.h"
+// #include "DHT.h"
 
-#define DHTPIN 2
-#define DHTTYPE DHT11
-DHT dht(DHTPIN, DHTTYPE);
+// #define DHTPIN 2
+// #define DHTTYPE DHT11
+// DHT dht(DHTPIN, DHTTYPE);
 
-void setup() {
-  Serial.begin(9600);
-  dht.begin();
-}
+// void setup() {
+//   Serial.begin(9600);
+//   dht.begin();
+// }
 
-void loop() {
-  delay(2000);
-  float h = dht.readHumidity();
-  float c = dht.readTemperature();
-  float f = dht.readTemperature(true);
+// void loop() {
+//   delay(2000);
+//   float h = dht.readHumidity();
+//   float c = dht.readTemperature();
+//   float f = dht.readTemperature(true);
 
-  if (isnan(h) || isnan(c) || isnan(f)) {
-    Serial.println("Failed to read from DHT sensor");
-    return;
-  }
+//   if (isnan(h) || isnan(c) || isnan(f)) {
+//     Serial.println("Failed to read from DHT sensor");
+//     return;
+//   }
 
-  Serial.print("Humidity : ");
-  Serial.print(h);
-  Serial.println(" % ");
-  Serial.print("Temperature : ");
-  Serial.print(c);
-  Serial.print(" °C / ");
-  Serial.print(f);
-  Serial.println(" °F ");
-  Serial.println("");
-}
+//   Serial.print("Humidity : ");
+//   Serial.print(h);
+//   Serial.println(" % ");
+//   Serial.print("Temperature : ");
+//   Serial.print(c);
+//   Serial.print(" °C / ");
+//   Serial.print(f);
+//   Serial.println(" °F ");
+//   Serial.println("");
+// }
+
+// =============================================
+
+// 초음파 센서
+
+// #define TRIG 9
+// #define ECHO 8
+
+// void setup() {
+//   Serial.begin(9600);
+//   pinMode(TRIG, OUTPUT);
+//   pinMode(ECHO, INPUT);
+// }
+
+// void loop() {
+//   digitalWrite(TRIG, HIGH);
+//   delay(10);
+//   digitalWrite(TRIG, LOW);
+//   float duration = pulseIn(ECHO, HIGH);
+//   float distance = ((34000*duration)/1000000)/2;
+//   Serial.print(distance);
+//   Serial.println("cm");
+//   delay(100);
+// }
+
+// =============================================
+
+// 초음파 센서로 부저와 LED 작동
+
+// #define TRIG 9
+// #define ECHO 8
+// #define BUZZER 13
+// #define LED 3
+
+// void setup() {
+//   Serial.begin(9600);
+//   pinMode(TRIG, OUTPUT);
+//   pinMode(ECHO, INPUT);
+//   pinMode(LED, OUTPUT); 
+//   pinMode(BUZZER, OUTPUT); 
+// }
+
+// void loop() {
+//   digitalWrite(TRIG, HIGH);
+//   delay(10);
+//   digitalWrite(TRIG, LOW);
+
+//   float duration = pulseIn(ECHO, HIGH);
+//   float distance = ((34000*duration)/1000000)/2;
+
+//   if(distance < 300) {
+//     digitalWrite(BUZZER, HIGH);
+//     digitalWrite(LED, HIGH);
+//   } else {
+//     digitalWrite(BUZZER, LOW);
+//     digitalWrite(LED, LOW);
+//   }
+
+//   Serial.print(distance);
+//   Serial.println("cm");
+//   delay(100);
+// }
+
+// =============================================
+
+// 가스 센서
+
+// #define GAS_A A0
+// #define GAS_D 8
+// #define BUZZER 13
+// #define LED 3
+
+// void setup() {
+//   Serial.begin(9600);
+//   pinMode(LED, OUTPUT); 
+//   pinMode(BUZZER, OUTPUT); 
+//   Serial.println("히터 가열");
+//   delay(1000);
+// }
+
+// void loop() {
+//   float sensorValue = analogRead(GAS_A);
+//   float sensorDValue = digitalRead(GAS_D);
+//   Serial.println("");
+//   Serial.print("센서 입력 : ");
+//   Serial.println(sensorValue);
+
+//   if(sensorValue > 300) {
+//     Serial.print(" |연기감지!");
+//     Serial.println("");
+//     digitalWrite(BUZZER, HIGH);
+//     digitalWrite(LED, HIGH);
+//   } else {
+//     digitalWrite(BUZZER, LOW);
+//     digitalWrite(LED, LOW);
+//   }
+
+//   Serial.print("센서 디지털 : ");
+//   Serial.print(sensorDValue);
+//   Serial.println("");
+
+//   delay(1000);
+// }
+
+// =============================================
+
+// 서브 모터
+
+// #include <Servo.h>
+
+// Servo servo;
+
+// void setup() {
+//   Serial.begin(9600);
+//   servo.attach(10);
+// }
+
+// void loop() {
+//   for (int angle=0; angle<=180; angle ++) {
+//     servo.write(angle);
+//     Serial.print("angle : ");
+//     Serial.print(angle);
+//     Serial.println("");
+//     delay(100);
+//   }
+// }
+
+// =============================================
+
+// LCD 디스플레이
+
+// #include <LiquidCrystal_I2C.h>
+// LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+// void setup() {
+//   lcd.init();
+//   lcd.backlight();
+// }
+
+// void loop() {
+//   lcd.setCursor(0, 0);
+//   lcd.print("Hello, World!");
+//   delay(1000);
+
+//   lcd.setCursor(0, 1);
+//   lcd.print("Posco X Codingon");
+//   delay(1000);
+
+//   lcd.clear();
+//   delay(1000);
+// }
+
+// =============================================
+// LCD 가변저항 서브모터 사용
+
+// #include <LiquidCrystal_I2C.h>
+// #include <Servo.h>
+// LiquidCrystal_I2C lcd(0x27, 16, 2);
+// Servo servo;
+
+// int prevResistor = -1;
+
+// void setup() {
+//   lcd.init();
+//   lcd.backlight();
+//   Serial.begin(9600);
+//   servo.attach(10);
+//   lcd.setCursor(0, 0);
+//   lcd.print("Current Angle");
+// }
+
+// void loop() {
+//   int resistor = analogRead(A0);
+//   Serial.println(resistor);
+//   resistor = map(resistor, 0, 1023, 0, 180);
+//   servo.write(resistor);
+
+//   if(resistor != prevResistor) {
+//     lcd.setCursor(0, 1);
+//     lcd.print("   ");
+//     lcd.setCursor(0, 1);
+//     lcd.print(resistor);
+//     lcd.write(0xDF);
+
+//     prevResistor = resistor;
+//   }
+//   Serial.println("");
+//   Serial.print(resistor);
+//   Serial.println(" °");
+// }
