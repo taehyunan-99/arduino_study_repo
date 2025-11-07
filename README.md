@@ -5,8 +5,14 @@
 ## 📂 폴더 구조
 ```
 arduino_study_repo/
-├── study_01/          # 기본 LED 제어
-└── study_02/          # PWM, 센서, 입출력 제어
+├── study_01/             # 기본 LED 제어
+├── study_02/             # PWM, 센서, 입출력 제어
+├── study_03/             # 시리얼 통신, WiFi 모듈 (ESP-01)
+└── arduino_serial_test/  # Python-Arduino 시리얼 통신 연동
+    ├── arduino_01.py     # Python 기본 시리얼 통신
+    ├── arduino_02.py     # Flask API 서버
+    ├── index.html        # Flask 연동 웹 인터페이스
+    └── index2.html       # Web Serial API 직접 연동
 ```
 
 ## 📂 학습 내용
@@ -110,5 +116,65 @@ arduino_study_repo/
 
 <br/>
 
+### 🔌 Arduino-Python 시리얼 통신
+#### 기본 시리얼 통신
+- **pyserial 라이브러리**: Python에서 시리얼 통신 구현
+- **Serial.read()**: 아두이노에서 데이터 수신 (ASCII 코드)
+- **Serial.available()**: 수신 버퍼에 데이터 있는지 확인
+- **ASCII 코드**: 문자 '1' = 49, '0' = 48
+- **양방향 통신**: Python → Arduino 명령 전송, Arduino → Python 상태 응답
+
+<br/>
+
+#### Flask API 서버 연동
+- **Flask**: Python 웹 프레임워크로 REST API 서버 구축
+- **CORS**: 브라우저에서 API 접근 허용 (`flask-cors`)
+- **POST 엔드포인트**: `/led` 경로로 LED 제어 명령 수신
+- **JSON 통신**: 웹 → Flask → Arduino 데이터 전달
+- **웹 인터페이스**: HTML/JavaScript로 LED 원격 제어
+
+<br/>
+
+#### Web Serial API
+- **navigator.serial.requestPort()**: 브라우저에서 직접 시리얼 포트 접근
+- **Chrome/Edge 지원**: Safari, Firefox는 미지원
+- **서버 불필요**: Python 없이 브라우저에서 직접 Arduino 제어
+- **TextEncoder**: JavaScript 문자열을 바이트로 변환하여 전송
+
+<br/>
+
+### 📶 WiFi 모듈 (ESP-01)
+#### AT 명령어 통신
+- **SoftwareSerial**: 소프트웨어 시리얼로 ESP-01 통신 (핀 2, 3)
+- **보드레이트**: ESP-01 기본 115200 baud
+- **AT 명령어**: 모뎀 제어 명령어로 WiFi 모듈 설정
+  - `AT`: 통신 테스트
+  - `AT+GMR`: 펌웨어 버전 확인
+  - `AT+CWMODE=1`: Station 모드 설정
+  - `AT+CWJAP`: WiFi 네트워크 연결
+  - `AT+CIPSTART`: TCP 연결 시작
+  - `AT+CIPSEND`: 데이터 전송
+  - `AT+CIPCLOSE`: 연결 종료
+
+<br/>
+
+#### WiFi 네트워크 연결
+- **Station 모드**: WiFi 클라이언트로 기존 네트워크 접속
+- **SSID/Password**: WiFi 인증 정보 설정
+- **IP 할당**: DHCP로 자동 IP 주소 받기
+- **연결 확인**: `WIFI GOT IP` 응답 대기
+
+<br/>
+
+#### HTTP 통신
+- **TCP 소켓**: 서버와 TCP 연결 수립
+- **HTTP GET 요청**: RESTful API 호출
+- **쿼리 파라미터**: URL에 센서 데이터 포함 (`?temperature=25&humidity=60`)
+- **응답 수신**: 서버 응답 데이터 읽기
+- **타임아웃 처리**: 명령별 대기 시간 설정
+- **에러 처리**: 연결 실패, 전송 실패 감지
+
+<br/>
+
 ---
-*마지막 업데이트: 2025-11-06*
+*마지막 업데이트: 2025-11-07*

@@ -419,3 +419,83 @@
 //   Serial.print(resistor);
 //   Serial.println(" °");
 // }
+
+// =============================================
+
+// RFID 사용
+// 하얀색 3777252
+// 파란색 1722392051
+
+// #include <SPI.h>
+// #include <MFRC522.h>
+
+// #define RST_PIN 9
+// #define SS_PIN 10
+// #define BUZZER 8
+// #define R_LED 2
+// #define B_LED 3
+// #define W_CARD "3777252"
+// #define B_CARD "1722392051"
+
+// MFRC522 mfrc(SS_PIN, RST_PIN);
+
+// void setup() {
+//   Serial.begin(9600);
+//   SPI.begin();
+//   mfrc.PCD_Init();
+
+//   pinMode(BUZZER, OUTPUT);
+//   pinMode(R_LED, OUTPUT);
+//   pinMode(B_LED, OUTPUT);
+// }
+
+// void loop() {
+//   if(!mfrc.PICC_IsNewCardPresent() || !mfrc.PICC_ReadCardSerial()) {
+//     delay(500);
+//     return;
+//   }
+
+//   digitalWrite(BUZZER, LOW);
+//   digitalWrite(R_LED, LOW);
+//   digitalWrite(B_LED, LOW);
+
+//   String cardUID = "";
+
+//   for(byte i = 0; i < 4; i++) { 
+//     cardUID += String(mfrc.uid.uidByte[i]);
+//     Serial.println("")
+//   }
+
+//   if(cardUID == W_CARD) {
+//     digitalWrite(B_LED, HIGH);
+//     digitalWrite(BUZZER, HIGH);
+//     delay(100);
+//     digitalWrite(BUZZER, LOW);
+//     digitalWrite(B_LED, LOW);
+//   }
+
+//   if(cardUID == B_CARD) {
+//   digitalWrite(R_LED, HIGH);
+//   digitalWrite(BUZZER, HIGH);
+//   delay(100);
+//   digitalWrite(BUZZER, LOW);
+//   digitalWrite(R_LED, LOW);
+//   delay(100);
+//   digitalWrite(R_LED, HIGH);
+//   digitalWrite(BUZZER, HIGH);
+//   delay(100);
+//   digitalWrite(BUZZER, LOW);
+//   digitalWrite(R_LED, LOW);
+//   }
+// }
+
+// =============================================
+
+
+
+
+
+
+
+
+
